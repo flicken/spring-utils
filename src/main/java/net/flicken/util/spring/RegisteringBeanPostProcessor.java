@@ -84,13 +84,10 @@ import org.springframework.util.ReflectionUtils.MethodCallback;
  *   <li>a {@code BeanPostProcessor} is only in effect after instantiation, leading to definition order dependencies
  *   <li>a {@code BeanPostProcessor} looks at all beans, where at this object only needs to look at 1 {@code target}
  * </ol>
- * Implementation contains commented out sections which could later be revived BeanPostProcessor interface is desired.
  * @author broberts
  */
 public class RegisteringBeanPostProcessor extends BeanFilteringSupport
 implements
-//BeanPostProcessor,
-//ApplicationContextAware,
 InitializingBean,
 ApplicationListener,
 BeanNameAware,
@@ -105,13 +102,11 @@ BeanFactoryAware
 		    + "$";
 	protected static final Pattern BEAN_METHOD_SUFFIX_PATTERN = Pattern.compile(BEAN_METHOD_SUFFIX_PATTERN_STRING);
 	
-//	private ApplicationContext context;
-	
 	private Object target;
 	private Method targetMethod;
 	private String methodName;
 	
-	// Alternative 
+	// Alternative way to specify target
 	private String beanName;
 	private BeanFactory beanFactory;
 	// public methods
@@ -143,27 +138,7 @@ BeanFactoryAware
 		determineBeanClassIfNull();
 	}
 
-// // Uncomment out for BeanPostProcessor implementation
-//	public Object postProcessAfterInitialization(Object obj, String s)
-//			throws BeansException {
-//		if (target.equals(obj))
-//		{
-//			registerBeans(context, obj);
-//		}
-//		return obj;
-//	}
-//
-//	public Object postProcessBeforeInitialization(Object obj, String s)
-//			throws BeansException {
-//		return obj;
-//	}
-//
-//	public void setApplicationContext(ApplicationContext context)
-//			throws BeansException {
-//		this.context = context;
-//	}
 
-//// Alternate method of hooking into bean processing, but less descriptive given name
 	public void onApplicationEvent(ApplicationEvent event) {
 		if (event instanceof ContextRefreshedEvent)
 		{
