@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+						http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+						http://www.springframework.org/schema/util http://www.springframework.org/schema/aop/spring-util-2.5.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<bean class="net.flicken.util.spring.PreserveBeanTargetClass">
+		<property name="beanName" value="instance"/>
+	</bean>
+	
+	<bean id="acceptor" class="net.flicken.util.spring.TestPreserveBeanTargetClass$Acceptor">
+	  <property name="instance" ref="instance"/>
+	</bean>
+	
+	<bean id="instance" class="net.flicken.util.spring.TestPreserveBeanTargetClass$MyClass" scope="singleton">
+		<!-- Only accepts implementation classes -->
+		<property name="name" value="Poalo"/>
+	</bean>
+
+	<aop:config>
+		<aop:aspect ref="logger">
+			<aop:before
+				pointcut="execution(* net.flicken.util.spring.TestPreserveBeanTargetClass$MyClassI.sayHello(*))
+    					and args(to)"
+				method="logHello" arg-names="to" />
+		</aop:aspect>
+	</aop:config>
+	<bean id="logger"
+		class="net.flicken.util.spring.TestPreserveBeanTargetClass$MyLogger">
+	</bean>
+
+</beans>

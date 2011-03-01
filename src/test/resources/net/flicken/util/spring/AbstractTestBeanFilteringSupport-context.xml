@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+		
+
+	<bean id="registry" class="net.flicken.util.spring.AbstractTestBeanFilteringSupport$Registry"/>
+	<bean id="plugin1" class="net.flicken.util.spring.AbstractTestBeanFilteringSupport$Plugin1"/>
+	<bean id="plugin2" class="net.flicken.util.spring.AbstractTestBeanFilteringSupport$Plugin2"/>
+	<bean id="extra" class="net.flicken.util.spring.AbstractTestBeanFilteringSupport$ExtraPlugin"/>
+	
+	<!-- Name of bean is strange so that it can be used for both TestBeanFilteringSupport and TestRegisteringBeanPostProcessorIsNameAware -->
+	<bean id="registry.registerPlugin" class="net.flicken.util.spring.RegisteringBeanPostProcessor">
+	  <property name="target" ref="registry"/>
+	  <property name="methodName" value="registerPlugin"/>
+	</bean>
+</beans>
