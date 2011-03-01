@@ -1,0 +1,5 @@
+Utilities for manipulating beans in a Spring Context:  
+  - Collecting, filtering, and removing beans
+  - Registering all beans of a given type (with filtering)
+  - Preserving the type of a CGLIB/AOP-enhanced bean, to allow injection based on class instead of interface
+  - Configuring java.util.Logger
